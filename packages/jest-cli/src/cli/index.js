@@ -222,11 +222,11 @@ const getConfigs = (
   let globalConfig;
   let hasDeprecationWarnings;
   let configs: Array<ProjectConfig> = [];
-  let projects = projectsFromCLIArgs;
+  let projects: Array<string> = [];
   let configPath: ?Path;
 
   if (projectsFromCLIArgs.length === 1) {
-    const parsedConfig = readConfig(argv, projects[0]);
+    const parsedConfig = readConfig(argv, projectsFromCLIArgs[0]);
     configPath = parsedConfig.configPath;
 
     if (parsedConfig.globalConfig.projects) {
@@ -245,7 +245,7 @@ const getConfigs = (
     }
   }
 
-  if (projects.length > 1) {
+  if (projects.length) {
     const parsedConfigs = projects
       .filter(root => {
         // Ignore globbed files that cannot be `require`d.
